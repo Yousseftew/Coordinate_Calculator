@@ -1,0 +1,116 @@
+
+/*
+/
+ We want to make a program that transforms between polar and rectangle coordinates
+/
+*/
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <cctype>
+#include <iostream>
+#include <string>
+using namespace std;
+
+long double r;
+long double a;
+
+void Declaration(){
+    cout << "The Coordinate is " <<"(" << r << "," << a << ")" << '\n';
+}
+int main() {
+    
+    //Declaring variable for mode
+    string mode;
+    //Declaring variables for step 1
+    string transform;
+    double fl;
+    string pi1;
+    double sl;
+    string pi2;
+    //Decalring varibales for step 2
+    int sign;
+    int sign2;
+    
+    //STEP 1: GETTING INFORMATION FROM THE USER
+    
+    //Identify the mode
+    cout << "Welcome to the Coordinates Calculator. \nPlease do include pi in your answers. Are you going to use radians or degrees?" << '\n';
+    cin >> mode;
+    
+    //Asking them if they want to transform to polar or to cartesian coordinates
+    cout << "Do you need to transform to polar coordinates?" << '\n';
+    cin >> transform;
+    
+    //We ask for the coordinates
+    cout << "Write the first number." << '\n';
+    cin >> fl;
+    cout << "Write the second number." << '\n';
+    cin >> sl;
+    
+    //STEP 2: CALCULATING THE COORDINATES
+    
+    //Change the letter of mode and transform to all lowercase to cancel capital sensitivity
+
+     for(int i = 0; i < mode.length(); i++){
+        mode[i] = tolower(mode[i]);
+     }
+     for(int i = 0; i < transform.length(); i++){
+        transform[i] = tolower(transform[i]);
+     }
+    
+    //An if/else function to separate radians and degrees
+    if(mode=="radians"||mode=="radian"){
+      
+            //Get the sign if both coordintaes are negative
+            if(sl<0&&fl<0)
+                sign= M_PI;
+            else
+                sign= 0;
+            
+            //Get the sign if a coordintaes is positive while the other is negative
+            if(sl>0&&fl<0)
+                sign2= M_PI;
+            else
+                sign2= 0;
+              
+            //We start an if/else function to calculate the coordinates
+            if(transform=="yes"){
+            r = sqrt(pow(fl,2)+pow(sl,2));
+            a = atan(sl/fl)- sign + sign2;;
+            Declaration();
+            }
+            else{
+            r = fl*cos(sl);
+            a = fl*sin(sl);
+            Declaration();
+            }
+    }
+    else{
+            //Get the sign if both coordinates are negative
+            if(sl<0&&fl<0)
+                sign= 180;
+            else
+                sign= 0;
+        
+            //Get the sign if a coordinates is positive while the other is negative
+            if(sl>0&&fl<0)
+                sign2= 180;
+            else
+                sign2= 0;
+        
+            //We start an if else function to calculate the coordinates
+            if(transform=="yes"){
+            r = sqrt(pow(fl,2)+pow(sl,2));
+            a = atan(sl/fl) * (180/M_PI) - sign + sign2;
+            Declaration();
+            }
+            else{
+            r = fl*cos(sl)*(M_PI/180);
+            a = fl*sin(sl)*(M_PI/180);
+            Declaration();
+            }
+    }
+    return 0;
+}
+
